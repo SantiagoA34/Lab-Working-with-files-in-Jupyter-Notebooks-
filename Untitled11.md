@@ -29,9 +29,9 @@ El objetivo de este trabajo es comprender y conocer los siguientes aspectos de l
 
 Es un modelo discreto  conocida como distribución contagio. Mide la aleatoriedad del contagio de enfermedades y de extensión y propagación de cualquier tipo de información relacionada un bien o servicio. Su origen se remonta hasta 1923, donde Friedrich Eggenberger y George Pólya lograron un avance matemático en la teoría de los refuerzos. Esta distribución influyó en áreas importantes de la estadística como la estadística Bayesiana. 
 
-La Polya puede verse como una extensión de la binomial y, evidentemente, de la Bernoulli, pero con refuerzos. Los refuerzos se refieren a que se aumenta la probabilidad de que algo vuelva a ocurrir cada vez que sucede. Entonces, se aumenta un mismo elemento en una “urna” para que la siguiente vez 2ue se elija un elemento de forma al azar, el o los determinados elementos que se sacaron previamente y se añadieron a la urna tengan una mayor probabilidad de salir.
+La Polya puede verse como una extensión de la binomial y, evidentemente, de la Bernoulli, pero con refuerzos. Los refuerzos se refieren a que se aumenta la probabilidad de que algo vuelva a ocurrir cada vez que sucede. Entonces, se aumenta un mismo elemento en una “urna” para que la siguiente vez que se elija un elemento de forma al azar, el o los determinados elementos que se sacaron previamente y se añadieron a la urna tengan una mayor probabilidad de salir.
 
-El procedimiento de devolver la bola a la urna con c boas más del mismo color es el refuerzo en el procedimiento y esto se repite n veces:$$
+El procedimiento de devolver la bola a la urna con c bolas más del mismo color es el refuerzo en el procedimiento y esto se repite n veces:$$
 〖(x)〗_n=x(x+1)(x+2)….(x+n-1)
 $$
 
@@ -206,7 +206,8 @@ La distribución hipergeométrica describe la probabilidad de extraer un número
 ### Parámetros de Ajuste:
 Los parámetros de ajustes varían dependiendo de las distrbuciones. Estos definen la forma y posición de la distribución para que se ajuste de la mejor manera a los datos, representando los datos realisticamente. 
 
-##### Distribución Polya: $$
+##### Distribución Polya: 
+$$
 P[X = k] = \binom{n}{k} \cdot \frac{M^{(k,c)} (N-M)^{(n-k,c)}}{N^{(n,c)}}
 $$ 
 Existen 4 parámetros para esta distribución
@@ -255,24 +256,46 @@ $$
 \max\left(0, n + \frac{N-M}{c}\right) \leq k \leq \min\left(n, \frac{-M}{c}\right)
 $$
 
-Casos particulares en función al valor de "c":
-|Parámetros|Representación|
-|----------|--------------|
-|
-$$
-c > 0
-$$|Un éxito o un fracaso incrementa la probabilidad de éxito o fracaso|
-|
-$$
-c = 0
-$$|Son sucesos independientes|
-|
-$$
-c < 0
-$$|El éxito disminuye la probabilidad de volver a tener éxito, aplica lo mismo para el fracaso|
+<table style="width:100%; border: 2px solid black; border-collapse: collapse;">
+  <thead>
+    <tr style="background-color: #800020; color: white;">
+      <th style="padding:10px; border: 2px solid black;">Parámetros</th>
+      <th style="padding:10px; border: 2px solid black;">Representación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:10px; border: 2px solid black; text-align: center;">
+        $$c > 0$$
+      </td>
+      <td style="padding:10px; border: 2px solid black;">
+        Un éxito o un fracaso incrementa la probabilidad de éxito o fracaso.
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px; border: 2px solid black; text-align: center;">
+        $$c = 0$$
+      </td>
+      <td style="padding:10px; border: 2px solid black;">
+        Son sucesos independientes.
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px; border: 2px solid black; text-align: center;">
+        $$c < 0$$
+      </td>
+      <td style="padding:10px; border: 2px solid black;">
+        El éxito disminuye la probabilidad de volver a tener éxito, aplica lo mismo para el fracaso.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-##### Distribución Gamma: $$
-f(x) = \frac{1}{\Gamma(k) b^k} x^{k-1} e^{-x/b}, \quad x \in (0, \infty)$$
+
+##### Distribución Gamma: 
+$$
+f(x) = \frac{1}{\Gamma(k) b^k} x^{k-1} e^{-x/b}, \quad x \in (0, \infty)
+$$
 Existen 2 parámetros:
 <table style="width:100%; border: 2px solid black; border-collapse: collapse;">
   <thead>
@@ -407,12 +430,15 @@ Una vez definidos estos conceptos, pasemos con los momentos centrales de las dis
 1. $$
 E[X] = np
 $$
+
 2. $$
 \text{Var}(X) = \mu_2 = \frac{npq(N + nc)}{N + c}
 $$ 
+
 3.  $$
 \text{Asimetría (Skewness)} = \mu_3 = \frac{\mu_2 (q - p)(N + 2nc)}{N + 2c}
 $$
+
 4. $$
 \text{Curtosis} = \mu_4 = \frac{(N+nc)\left(N^2 + 3Nc(n-1) + c^2(n-1)(3n-5)\right)pq(1-6pq)}{(N+c)^2 \cdot (npq(N+nc))} - 3
 $$
@@ -468,208 +494,23 @@ __Parámetros de Gráficas 9 y 10 (PDF y CDF)__
 
 * ### Gráficas 1 y 2:
 
-
-```python
-# Instalación de las librerias necesarias
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import betabinom
-
-# Parámetros
-n = 30
-a = 5
-b = 10
-
-# Valores de k
-k = np.arange(0, n + 1)
-
-# PDF y CDF
-pdf = betabinom.pmf(k, n, a, b)
-cdf = betabinom.cdf(k, n, a, b)
-
-# Gráficas
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-# PDF
-ax[0].vlines(k, 0, pdf, colors='royalblue', lw=3)
-ax[0].plot(k, pdf, 'o', color='navy')
-ax[0].set_title('Distribución de Polya (PDF)', fontsize=16)
-ax[0].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[0].set_ylabel('P[X = k]', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-# CDF
-ax[1].plot(k, cdf, marker='o', color='crimson')
-ax[1].set_title('Distribución de Polya (CDF)', fontsize=16)
-ax[1].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[1].set_ylabel('P[X ≤ k]', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_28_0.png)
-    
-
+![pdfpolya1.png](pdfpolya1.png)
 
 * ### Gráficas 3 y 4:
 
-
-```python
-n = 35
-a = 10
-b = 15
-
-k = np.arange(0, n + 1)
-pdf = betabinom.pmf(k, n, a, b)
-cdf = betabinom.cdf(k, n, a, b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-# Gráfica PDF
-ax[0].vlines(k, 0, pdf, colors='royalblue', lw=3)
-ax[0].plot(k, pdf, 'o', color='navy')
-ax[0].set_title('Distribución de Polya (PDF)', fontsize=16)
-ax[0].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[0].set_ylabel('P(X = k)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-# Gráfica CDF
-ax[1].plot(k, cdf, marker='o', color='crimson')
-ax[1].set_title('Distribución de Polya (CDF)', fontsize=16)
-ax[1].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[1].set_ylabel('P(X ≤ k)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_30_0.png)
-    
-
+![polya34.png](polya34.png)
 
 * ### Gráficas 5 y 6:
 
-
-```python
-n = 40
-a = 15
-b = 20
-
-k = np.arange(0, n + 1)
-pdf = betabinom.pmf(k, n, a, b)
-cdf = betabinom.cdf(k, n, a, b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-# Gráfica PDF
-ax[0].vlines(k, 0, pdf, colors='royalblue', lw=3)
-ax[0].plot(k, pdf, 'o', color='navy')
-ax[0].set_title('Distribución de Polya (PDF)', fontsize=16)
-ax[0].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[0].set_ylabel('P(X = k)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-# Gráfica CDF
-ax[1].plot(k, cdf, marker='o', color='crimson')
-ax[1].set_title('Distribución de Polya (CDF)', fontsize=16)
-ax[1].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[1].set_ylabel('P(X ≤ k)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_32_0.png)
-    
-
+![polya56.png](polya56.png)
 
 * ### Gráficas 7 y 8:
 
-
-```python
-n = 45
-a = 20
-b = 25
-
-k = np.arange(0, n + 1)
-pdf = betabinom.pmf(k, n, a, b)
-cdf = betabinom.cdf(k, n, a, b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-# Gráfica PDF
-ax[0].vlines(k, 0, pdf, colors='royalblue', lw=3)
-ax[0].plot(k, pdf, 'o', color='navy')
-ax[0].set_title('Distribución de Polya (PDF)', fontsize=16)
-ax[0].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[0].set_ylabel('P(X = k)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-# Gráfica CDF
-ax[1].plot(k, cdf, marker='o', color='crimson')
-ax[1].set_title('Distribución de Polya (CDF)', fontsize=16)
-ax[1].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[1].set_ylabel('P(X ≤ k)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_34_0.png)
-    
-
+![polya78.png](polya78.png)
 
 * ### Gráficas 9 y 10:
 
-
-```python
-n = 50
-a = 25
-b = 30
-
-k = np.arange(0, n + 1)
-pdf = betabinom.pmf(k, n, a, b)
-cdf = betabinom.cdf(k, n, a, b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-# Gráfica PDF
-ax[0].vlines(k, 0, pdf, colors='royalblue', lw=3)
-ax[0].plot(k, pdf, 'o', color='navy')
-ax[0].set_title('Distribución de Polya (PDF)', fontsize=16)
-ax[0].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[0].set_ylabel('P(X = k)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-# Gráfica CDF
-ax[1].plot(k, cdf, marker='o', color='crimson')
-ax[1].set_title('Distribución de Polya (CDF)', fontsize=16)
-ax[1].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[1].set_ylabel('P(X ≤ k)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_36_0.png)
-    
-
+![polya910.png](polya910.png)
 
 __Distribución Gamma:__
 
@@ -697,181 +538,23 @@ __Parámetros para Gráficas 19 y 20 (PDF y CDF)__
 
 * ### Gráficas 11 y 12:
 
-
-```python
-#Instalación de librerias
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import gamma
-
-k = 5
-b = 5
-
-x = np.linspace(0, 100, 1000)
-pdf = gamma.pdf(x, a=k, scale=b)
-cdf = gamma.cdf(x, a=k, scale=b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-# PDF
-ax[0].plot(x, pdf, color='royalblue')
-ax[0].set_title('Distribución Gamma (PDF)', fontsize=16)
-ax[0].set_xlabel('x', fontsize=14)
-ax[0].set_ylabel('f(x)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-# CDF
-ax[1].plot(x, cdf, color='crimson')
-ax[1].set_title('Distribución Gamma (CDF)', fontsize=16)
-ax[1].set_xlabel('x', fontsize=14)
-ax[1].set_ylabel('F(x)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_39_0.png)
-    
-
+![gamma12.png](gamma12.png)
 
 * ### Gráficas 13 y 14:
 
-
-```python
-k = 10
-b = 10
-x = np.linspace(0, 200, 1000)
-pdf = gamma.pdf(x, a=k, scale=b)
-cdf = gamma.cdf(x, a=k, scale=b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-ax[0].plot(x, pdf, color='royalblue')
-ax[0].set_title('Distribución Gamma (PDF)', fontsize=16)
-ax[0].set_xlabel('x', fontsize=14)
-ax[0].set_ylabel('f(x)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-ax[1].plot(x, cdf, color='crimson')
-ax[1].set_title('Distribución Gamma (CDF)', fontsize=16)
-ax[1].set_xlabel('x', fontsize=14)
-ax[1].set_ylabel('F(x)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_41_0.png)
-    
-
+![gamm34.png](gamm34.png)
 
 * ### Gráficas 15 y 16:
 
-
-```python
-k = 15
-b = 15
-x = np.linspace(0, 300, 1000)
-pdf = gamma.pdf(x, a=k, scale=b)
-cdf = gamma.cdf(x, a=k, scale=b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-ax[0].plot(x, pdf, color='royalblue')
-ax[0].set_title('Distribución Gamma (PDF)', fontsize=16)
-ax[0].set_xlabel('x', fontsize=14)
-ax[0].set_ylabel('f(x)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-ax[1].plot(x, cdf, color='crimson')
-ax[1].set_title('Distribución Gamma (CDF)', fontsize=16)
-ax[1].set_xlabel('x', fontsize=14)
-ax[1].set_ylabel('F(x)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_43_0.png)
-    
-
+![gamma56.png](gamma56.png)
 
 * ### Gráfica 17 y 18:
 
-
-```python
-k = 20
-b = 20
-x = np.linspace(0, 400, 1000)
-pdf = gamma.pdf(x, a=k, scale=b)
-cdf = gamma.cdf(x, a=k, scale=b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-ax[0].plot(x, pdf, color='royalblue')
-ax[0].set_title('Distribución Gamma (PDF)', fontsize=16)
-ax[0].set_xlabel('x', fontsize=14)
-ax[0].set_ylabel('f(x)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-ax[1].plot(x, cdf, color='crimson')
-ax[1].set_title('Distribución Gamma (CDF)', fontsize=16)
-ax[1].set_xlabel('x', fontsize=14)
-ax[1].set_ylabel('F(x)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_45_0.png)
-    
-
+![gamma78.png](gamma78.png)
 
 * ### Gráficas 19 y 20:
 
-
-```python
-k = 25
-b = 25
-x = np.linspace(0, 500, 1000)
-pdf = gamma.pdf(x, a=k, scale=b)
-cdf = gamma.cdf(x, a=k, scale=b)
-
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-ax[0].plot(x, pdf, color='royalblue')
-ax[0].set_title('Distribución Gamma (PDF)', fontsize=16)
-ax[0].set_xlabel('x', fontsize=14)
-ax[0].set_ylabel('f(x)', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-ax[1].plot(x, cdf, color='crimson')
-ax[1].set_title('Distribución Gamma (CDF)', fontsize=16)
-ax[1].set_xlabel('x', fontsize=14)
-ax[1].set_ylabel('F(x)', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_47_0.png)
-    
-
+![gamma910.png](gamma910.png)
 
 __Distribución Beta:__
 
@@ -899,167 +582,23 @@ __Parámetros para Gráficas 29 y 30 (PDF y CDF)__
 
 * ### Gráficas 21 y 22:
 
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import beta
-
-a, b = 2, 5
-x = np.linspace(0, 1, 1000)
-pdf = beta.pdf(x, a, b)
-cdf = beta.cdf(x, a, b)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].plot(x, pdf, 'b-', label=f'PDF Beta({a},{b})')
-axs[0].set_title('Beta PDF')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Density')
-axs[0].legend()
-
-axs[1].plot(x, cdf, 'r-', label=f'CDF Beta({a},{b})')
-axs[1].set_title('Beta CDF')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Cumulative Probability')
-axs[1].legend()
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_50_0.png)
-    
-
+![betta12.png](betta12.png)
 
 * ### Gráficas 23 y 24:
 
-
-```python
-a, b = 7, 10
-x = np.linspace(0, 1, 1000)
-pdf = beta.pdf(x, a, b)
-cdf = beta.cdf(x, a, b)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].plot(x, pdf, 'b-', label=f'PDF Beta({a},{b})')
-axs[0].set_title('Beta PDF')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Density')
-axs[0].legend()
-
-axs[1].plot(x, cdf, 'r-', label=f'CDF Beta({a},{b})')
-axs[1].set_title('Beta CDF')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Cumulative Probability')
-axs[1].legend()
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_52_0.png)
-    
-
+![betta34.png](betta34.png)
 
 * ### Gráficas 25 y 26:
 
-
-```python
-a, b = 12, 15
-x = np.linspace(0, 1, 1000)
-pdf = beta.pdf(x, a, b)
-cdf = beta.cdf(x, a, b)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].plot(x, pdf, 'b-', label=f'PDF Beta({a},{b})')
-axs[0].set_title('Beta PDF')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Density')
-axs[0].legend()
-
-axs[1].plot(x, cdf, 'r-', label=f'CDF Beta({a},{b})')
-axs[1].set_title('Beta CDF')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Cumulative Probability')
-axs[1].legend()
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_54_0.png)
-    
-
+![beta56.png](beta56.png)
 
 * ### Gráficas 27 y 28:
 
-
-```python
-a, b = 17, 20
-x = np.linspace(0, 1, 1000)
-pdf = beta.pdf(x, a, b)
-cdf = beta.cdf(x, a, b)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].plot(x, pdf, 'b-', label=f'PDF Beta({a},{b})')
-axs[0].set_title('Beta PDF')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Density')
-axs[0].legend()
-
-axs[1].plot(x, cdf, 'r-', label=f'CDF Beta({a},{b})')
-axs[1].set_title('Beta CDF')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Cumulative Probability')
-axs[1].legend()
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_56_0.png)
-    
-
+![beta78.png](beta78.png)
 
 * ### Gráficas 29 y 30:
 
-
-```python
-a, b = 22, 25
-x = np.linspace(0, 1, 1000)
-pdf = beta.pdf(x, a, b)
-cdf = beta.cdf(x, a, b)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].plot(x, pdf, 'b-', label=f'PDF Beta({a},{b})')
-axs[0].set_title('Beta PDF')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Density')
-axs[0].legend()
-
-axs[1].plot(x, cdf, 'r-', label=f'CDF Beta({a},{b})')
-axs[1].set_title('Beta CDF')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Cumulative Probability')
-axs[1].legend()
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_58_0.png)
-    
-
+![beta910.png](beta910.png)
 
 __Distribución Hipergeométrica:__
 
@@ -1092,156 +631,72 @@ __Parámetros para Gráficas 39 y 40 (PDF y CDF)__
 
 * ### Gráficas 31 y 32:
 
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import hypergeom
-
-N, k, n = 30, 10, 5
-x = np.arange(0, n+1)
-pmf = hypergeom.pmf(x, N, k, n)
-cdf = hypergeom.cdf(x, N, k, n)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].stem(x, pmf, basefmt=" ")
-axs[0].set_title(f'Hipergeométrica PMF (N={N}, k={k}, n={n})')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Probabilidad')
-
-axs[1].step(x, cdf, where='post')
-axs[1].set_title(f'Hipergeométrica CDF (N={N}, k={k}, n={n})')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Probabilidad acumulada')
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_61_0.png)
-    
-
+![hipergeo12.png](hipergeo12.png)
 
 * ### Gráficas 33 y 34:
 
-
-```python
-N, k, n = 35, 15, 10
-x = np.arange(0, n+1)
-pmf = hypergeom.pmf(x, N, k, n)
-cdf = hypergeom.cdf(x, N, k, n)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].stem(x, pmf, basefmt=" ")
-axs[0].set_title(f'Hipergeométrica PMF (N={N}, k={k}, n={n})')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Probabilidad')
-
-axs[1].step(x, cdf, where='post')
-axs[1].set_title(f'Hipergeométrica CDF (N={N}, k={k}, n={n})')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Probabilidad acumulada')
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_63_0.png)
-    
-
+![hipergeo34.png](hipergeo34.png)
 
 * ### Gráficas 35 y 36:
 
-
-```python
-N, k, n = 40, 20, 15
-x = np.arange(0, n+1)
-pmf = hypergeom.pmf(x, N, k, n)
-cdf = hypergeom.cdf(x, N, k, n)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].stem(x, pmf, basefmt=" ")
-axs[0].set_title(f'Hipergeométrica PMF (N={N}, k={k}, n={n})')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Probabilidad')
-
-axs[1].step(x, cdf, where='post')
-axs[1].set_title(f'Hipergeométrica CDF (N={N}, k={k}, n={n})')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Probabilidad acumulada')
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_65_0.png)
-    
-
+![hipergeo56.png](hipergeo56.png)
 
 * ### Gráficas 37 y 38:
 
-
-```python
-N, k, n = 45, 25, 20
-x = np.arange(0, n+1)
-pmf = hypergeom.pmf(x, N, k, n)
-cdf = hypergeom.cdf(x, N, k, n)
-
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].stem(x, pmf, basefmt=" ")
-axs[0].set_title(f'Hipergeométrica PMF (N={N}, k={k}, n={n})')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Probabilidad')
-
-axs[1].step(x, cdf, where='post')
-axs[1].set_title(f'Hipergeométrica CDF (N={N}, k={k}, n={n})')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Probabilidad acumulada')
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_67_0.png)
-    
-
+![hipergeo78.png](hipergeo78.png)
 
 * ### Gráficas 39 y 40:
 
+![hipergeo910.png](hipergeo910.png)
 
-```python
-N, k, n = 50, 30, 25
-x = np.arange(0, n+1)
-pmf = hypergeom.pmf(x, N, k, n)
-cdf = hypergeom.cdf(x, N, k, n)
+### Relación con Estadística Inferencial:
+La estadística inferencial se encarga de sacar conclusiones sobre una población a partir de una muestra y estimar parámetros desconocidos. Ademas, realiza pruebas de hipótesis y construye intervalos de confianza.
 
-fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-axs[0].stem(x, pmf, basefmt=" ")
-axs[0].set_title(f'Hipergeométrica PMF (N={N}, k={k}, n={n})')
-axs[0].set_xlabel('x')
-axs[0].set_ylabel('Probabilidad')
+Para lograr esto de forma válida y rigurosa, se apoya directamente en distribuciones de probabilidad.
 
-axs[1].step(x, cdf, where='post')
-axs[1].set_title(f'Hipergeométrica CDF (N={N}, k={k}, n={n})')
-axs[1].set_xlabel('x')
-axs[1].set_ylabel('Probabilidad acumulada')
+1.⁠ ⁠Distribución de Pólya:
+* Tipo: 
+Distribución discreta basada en un modelo de urnas con refuerzo.
 
-plt.tight_layout()
-plt.show()
-```
+* Uso en inferencia:
+Se utiliza para modelar procesos de refuerzo, donde cada observación aumenta la probabilidad de que ocurra de nuevo (aprendizaje, contagio, dependencia).
+También tiene aplicaciones en aprendizaje bayesiano no paramétrico (ej: modelos Dirichlet).
 
+* Relación:
+Se puede ver como una binomial compuesta con probabilidad aleatoria Beta.
+Por eso, tiene una relación estrecha con la distribución Beta-Binomial.
 
-    
-![png](output_69_0.png)
-    
+2.⁠ ⁠ Distribución Gamma:
+* Tipo: 
+Distribución continua en [0, ∞), con forma flexible.
+
+* Uso en inferencia:
+Se utiliza para modelar tiempos de espera, varianzas, o como distribución a priori para parámetros como la tasa 
+𝜆. λ en modelos exponenciales o Poisson. Aparece también en análisis de supervivencia y procesos estocásticos.
+
+* Relación:
+Es la conjugada bayesiana de la distribución de Poisson y exponencial. Si tomas dos variables Gamma independientes, su cociente genera una Beta. Su suma se comporta como otra Gamma (propiedad útil en inferencia).
+
+3. Distribución Beta:
+* Tipo: 
+Distribución continua definida en el intervalo [0, 1].
+
+* Uso en inferencia:
+Fundamental en estadística bayesiana como distribución a priori y posterior para proporciones o probabilidades.
+Si tienes una proporción desconocida, puedes usar una Beta como creencia inicial, y actualizarla con los datos.
+ 
+* Relación:
+Se relaciona con la binomial y la binomial negativa como conjugada bayesiana. También puede derivarse de distribuciones Gamma independientes.
+
+4.⁠ Distribución Hipergeométrica:
+* Tipo: 
+Distribución discreta para muestreo sin reemplazo.
+
+* Uso en inferencia:
+Clave en muestreo de poblaciones finitas, especialmente cuando no se puede suponer reemplazo.
+
+* Relación:
+Se aproxima a la binomial cuando la población es grande. No es conjugada bayesiana como las otras, pero es vital para diseño de experimentos y estimación en poblaciones pequeñas.
 
 
 ### Aplicaciones (Extra)
@@ -1472,58 +927,7 @@ $$
 
 ### Gráfica de la PDF y CDF del ejemplo:
 
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-import scipy.special as sp
-
-# rising factorial mejorada usando scipy
-def rising_factorial(x, n, c):
-    return sp.poch(x / c, n) * (c ** n)
-
-# Parámetros
-n = 20    # número de extracciones
-M = 5     # éxitos totales en la población
-N = 100   # tamaño de la población total
-c = 2     # incremento en el reemplazo
-
-# Valores de k
-k = np.arange(0, n + 1)
-
-# PDF
-pdf = sp.comb(n, k) * (rising_factorial(M, k, c) * rising_factorial(N - M, n - k, c)) / rising_factorial(N, n, c)
-
-# CDF
-cdf = np.cumsum(pdf)
-
-# Graficar
-fig, ax = plt.subplots(1, 2, figsize=(14, 5))
-
-# PDF
-ax[0].vlines(k, 0, pdf, colors='royalblue', lw=3)
-ax[0].plot(k, pdf, 'o', color='navy')
-ax[0].set_title('Distribución de Pólya Generalizada (PDF)', fontsize=16)
-ax[0].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[0].set_ylabel('P[X = k]', fontsize=14)
-ax[0].grid(alpha=0.3)
-
-# CDF
-ax[1].plot(k, cdf, marker='o', color='crimson')
-ax[1].set_title('Distribución de Pólya Generalizada (CDF)', fontsize=16)
-ax[1].set_xlabel('Número de éxitos (k)', fontsize=14)
-ax[1].set_ylabel('P[X ≤ k]', fontsize=14)
-ax[1].grid(alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-
-    
-![png](output_78_0.png)
-    
-
+![EJEMPLO12.png](EJEMPLO12.png)
 
 ### Interpretación de las gráficas:
 * ##### PDF - Función de Probabilidad:
@@ -1541,6 +945,54 @@ Muestra la probabilidad de obtener hasta k éxitos (acumulado).
 Se observa que parte de ≈0.4 (porque la probabilidad de 0 éxitos no es tan baja) y sube muy rápido a 1.
 
 Se observa de igual forma que casi toda la probabilidad está acumulada en los primeros 4-5 éxitos. Eso también es lógico porque con M pequeño, es raro tener muchos éxitos.
+
+### Conclusiones
+El análisis de las distribuciones de probabilidad revela su importancia axial en la modelización de la aleatoriedad y la variabilidad inherentes a los fenómenos empíricos. Su utilidad provee descripciones de datos que son útiles para la estadística inferencial. 
+
+La relación existente entre las distribuciones y la estadística inferencial se manifiesta en la fundamentación de procedimientos críticos como las pruebas de hipótesis, la construcción de intervalos de confianza y la estimación de parámetros. La capacidad de cuantificar la probabilidad de observaciones muestrales bajo supuestos distribucionales permite la toma de decisiones basada en evidencia cuantificable. Las aplicaciones de estas distribuciones abarcan dominios con requerimientos específicos.
+
+La distribución de Pólya facilita el modelado de fenómenos de contagio en epidemiología, riesgo operacional en finanzas y adopción tecnológica en economía. 
+
+La distribución Gamma encuentra aplicaciones en la modelización de tiempos de espera y vida útil en ingeniería, análisis de precipitaciones en meteorología, y estudios de riesgo y recuperación económica. 
+
+La distribución Beta, definida en el intervalo [0,1], es comúnmente utilizada para la estadística Bayesiana, la modelización de la distribución de riquezas  y la optimización de modelos financieros. 
+
+Por último, la distribución Hipergeométrica permite el análisis de muestras sin reemplazo, en control de calidad, auditorías y estudios genéticos, así como en la modelización de selecciones y asignaciones en economía
+
+
+### Bibliografía
+* (BYJUS). (s/f). Beta distribution. https://byjus.com/maths/beta-distribution/ 
+
+* Entry, Z. (s/f). Leonhard Euler - biography. Maths History. Recuperado el 11 de abril de 2025, de https://mathshistory.st-andrews.ac.uk/Biographies/Euler/ 
+
+* FasterCapital. (s/f). The history of the gamma function. FasterCapital. Recuperado el 11 de abril de 2025, de https://fastercapital.com/topics/the-history-of-the-gamma-function.html 
+
+* Forbes, C., Evans, M., Hastings, N., & Peacock, B. (2011). Statistical Distributions (4th ed.). Wiley. (Páginas 120-125). 
+
+* Galo Sánchez, J. R. (s/f). Modelo Estadística. Proyectodescartes.org. Recuperado el 11 de abril de 2025, de https://proyectodescartes.org/iCartesiLibri/materiales_didacticos/EstadisticaProbabilidadInferencia/VAdiscreta/4_1DistribucionHipergeometrica/index.html 
+
+* Hernández, E. 3. (s/f). Las distribuciones Gamma y Beta. Itam.mx. Recuperado el 11 de abril de 2025, de https://gente.itam.mx/ebarrios/distribuciones/distribucion_GammaBeta.pdf 
+
+* Hosch, & L., W. (2025). Hypergeometric distribution. En Encyclopedia Britannica. https://www.britannica.com/topic/hypergeometric-distribution 
+
+* Hypergeometric distribution. (s/f). StudySmarter UK. Recuperado el 11 de abril de 2025, de https://www.studysmarter.co.uk/explanations/engineering/engineering-mathematics/hypergeometric-distribution/ 
+
+* (Mclean, M). (s/f). Polya’s urn and the beta-Bernoulli process. Uchicago.edu. Recuperado el 11 de abril de 2025, de https://math.uchicago.edu/~may/REU2013/REUPapers/Helfand.pdf 
+
+* Muñoz, F. (2014). Distribuciones Poisson y Gamma: Una Discreta y Continua Relación. Prospectiva. Scielo. http://www.scielo.org.co/scielo.php?script=sci_arttext&pid=S1692-82612014000100012 
+
+* Proof using conditional probability and induction. (s/f). Mathematics Stack Exchange. Recuperado el 11 de abril de 2025, de https://math.stackexchange.com/questions/908194/p%C3%B3lyas-urn-scheme-proof-using-conditional-probability-and-induction 
+
+* (S/f-b). (s/f). Lsu.edu. Recuperado el 11 de abril de 2025, de https://www.math.lsu.edu/system/files/WM1%20paper.pdf 
+
+* Siegrist, K. (31 de octubre de 2022). La distribución beta. LibreTexts Español; Libretexts. https://espanol.libretexts.org/Estadisticas/Teoria_de_Probabilidad/Probabilidad%2C_estad%C3%ADstica_matem%C3%A1tica_y_procesos_estoc%C3%A1sticos_(Siegrist)/05%3A_Distribuciones_especiales/5.17%3A_La_distribuci%C3%B3n_beta 
+
+* Siegrist, K. (31 de octubre de 2022). La distribución Gamma. LibreTexts Español; Libretexts. https://espanol.libretexts.org/Estadisticas/Teoria_de_Probabilidad/Probabilidad%2C_estad%C3%ADstica_matem%C3%A1tica_y_procesos_estoc%C3%A1sticos_(Siegrist)/05%3A_Distribuciones_especiales/5.08%3A_La_distribuci%C3%B3n_Gamma 
+
+* (Statistics Easily). (2 de septiembre de 2024). ¿Qué es: Momento central? LEARN STATISTICS EASILY. https://es.statisticseasily.com/glossario/what-is-central-moment-statistical-measures/ 
+
+* Frogamesformacion.com. (s/f). Recuperado el 11 de abril de 2025, de https://cursos.frogamesformacion.com/pages/blog/distribucion-hipergeometrica 
+
 
 
 ```python
